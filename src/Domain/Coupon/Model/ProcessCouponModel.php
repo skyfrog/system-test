@@ -7,8 +7,7 @@ class ProcessCouponModel
     public function __construct(
         private readonly string $price,
         private readonly string $couponCode
-    )
-    {
+    ) {
     }
 
     /**

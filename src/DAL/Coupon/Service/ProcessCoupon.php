@@ -12,8 +12,7 @@ class ProcessCoupon implements ProcessCouponInterface
 {
     public function __construct(
         private readonly CouponRepository $couponRepository
-    )
-    {
+    ) {
     }
 
     /**

@@ -16,8 +16,7 @@ class PriceCalculator implements PriceCalculatorInterface
         private readonly ProductRepository $productRepository,
         private readonly ProcessCouponInterface $processCoupon,
         private readonly PriceModificatorBasedOnVatNumberInterface $priceModificatorBasedOnVatNumber
-    )
-    {
+    ) {
     }
 
     /**
@@ -32,10 +31,12 @@ class PriceCalculator implements PriceCalculatorInterface
         $price = $product->getPrice();
 
         if ($model->getCouponCode()) {
-            $price = $this->processCoupon->processCoupon(new ProcessCouponModel(
-                $price,
-                $model->getCouponCode()
-            ));
+            $price = $this->processCoupon->processCoupon(
+                new ProcessCouponModel(
+                    $price,
+                    $model->getCouponCode()
+                )
+            );
         }
 
         if ($model->getTaxNumber()) {
