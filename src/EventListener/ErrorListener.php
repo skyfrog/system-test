@@ -16,28 +16,7 @@ class ErrorListener implements EventSubscriberInterface
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger
-    )
-    {
-    }
-
-    public function onKernelException(ExceptionEvent $event): void
-    {
-        if ($e = $event->getThrowable()) {
-            if ($e instanceof ApiError) {
-                $message = $e->getMessage();
-            } else {
-                $message = 'Internal error';
-                $this->logger->error($e);
-            }
-
-            $event->setResponse(
-                new Response(
-                    $this->serializer->serialize(new ErrorResponse($message), 'json'),
-                    Response::HTTP_BAD_REQUEST,
-                    ['Content-type' => 'application/json']
-                )
-            );
-        }
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -45,5 +24,27 @@ class ErrorListener implements EventSubscriberInterface
         return [
             KernelEvents::EXCEPTION => 'onKernelException'
         ];
+    }
+
+    public function onKernelException(ExceptionEvent $event): void
+    {
+        if ($e = $event->getThrowable()) {
+            if ($e instanceof ApiError) {
+                $message = $e->getMessage();
+                $context = $e->getContext();
+            } else {
+                $message = 'Internal error';
+                $context = null;
+                $this->logger->error($e);
+            }
+
+            $event->setResponse(
+                new Response(
+                    $this->serializer->serialize(new ErrorResponse($message, $context), 'json'),
+                    Response::HTTP_BAD_REQUEST,
+                    ['Content-type' => 'application/json']
+                )
+            );
+        }
     }
 }
