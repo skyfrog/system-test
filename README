@@ -1,0 +1,11 @@
+Build images:
+    docker compose build
+Run containers:
+    docker compose up
+Load fixtures:
+    docker compose exec php "php" "bin/console" "doctrine:fixtures:load"
+API endpoints:
+    http://localhost/api/product/calc-price
+    http://localhost/api/product/payment
+Run tests:
+    docker compose exec php "bin/phpunit"

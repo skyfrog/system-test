@@ -28,13 +28,13 @@ class AppFixtures extends Fixture
         $coupon1 = new Coupon();
         $coupon1->setCode('summer_sale_absolute');
         $coupon1->setType(CouponType::ABSOLUTE);
-        $coupon1->setDiscount('1.01');
+        $coupon1->setDiscount('7.01');
         $manager->persist($coupon1);
 
         $coupon2 = new Coupon();
         $coupon2->setCode('summer_sale_percentage');
         $coupon2->setType(CouponType::PERCENTAGE);
-        $coupon2->setDiscount('30.00');
+        $coupon2->setDiscount('6.00');
         $manager->persist($coupon2);
 
         $manager->flush();

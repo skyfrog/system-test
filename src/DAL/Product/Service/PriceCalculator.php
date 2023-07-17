@@ -43,6 +43,10 @@ class PriceCalculator implements PriceCalculatorInterface
             $price = $this->priceModificatorBasedOnVatNumber->modify($price, $model->getTaxNumber());
         }
 
+        if ($price <= 0) {
+            throw new ValidationError('Calculated price is invalid');
+        }
+
         return $price;
     }
 }
